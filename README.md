@@ -21,18 +21,18 @@ import (
 
 func main() {
 	provider := allinkl.Provider{
-		KasLogin:        "",
-		KasAuthPassword: "",
+		KasLogin:        "<your-login>",
+		KasAuthPassword: "<your-password>",
 	}
 
-	records, err := provider.GetRecords(context.TODO(), "example.com.")
-	recs := make([]libdns.Record, 0, len(records))
+	records, err := provider.GetRecords(context.TODO(), "example.de.")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
-	for _, record := range recs {
-		fmt.Printf("%s \n", record.Name)
+	for _, record := range records {
+		rr := record.RR()
+		fmt.Printf("%s (%s): %s\n", rr.Name, rr.Type, rr.Data)
 	}
 }
 ```
