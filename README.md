@@ -13,28 +13,26 @@ To authenticate you need to supply your KAS-Username and KAS-Password to the Pro
 package main
 
 import (
-    "context"
-    "fmt"
-    "log"
+	"context"
+	"fmt"
 
-    "github.com/libdns/libdns"
-    "github.com/ljelschen/libdns-all-inkl"
+	allinkl "github.com/ljelschen/libdns-all-inkl"
 )
-
 
 func main() {
 	provider := allinkl.Provider{
-        Username: "your-kas-username",
-        Password: "your-kas-password",
+		KasLogin:        "",
+		KasAuthPassword: "",
 	}
 
-	records, err  := provider.GetRecords(context.TODO(), "example.com.")
+	records, err := provider.GetRecords(context.TODO(), "example.com.")
+	recs := make([]libdns.Record, 0, len(records))
 	if err != nil {
-		fmt.Println(err.Error())    
+		fmt.Println(err.Error())
 	}
 
-	for _, record := range records {
-		fmt.Printf("%s %v %s %s\n", record.Name, record.TTL.Seconds(), record.Type, record.Value)
+	for _, record := range recs {
+		fmt.Printf("%s \n", record.Name)
 	}
 }
 ```
